@@ -19,15 +19,6 @@
       http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-autowire="byName">
 		
-	  <!-- 自动扫描 -->
-    <context:component-scan base-package="com.tccz.loan"/>
- 
-	<bean id="loanCalculateServiceForAC" class="com.tccz.loan.domainservice.impl.LoanCalculateServiceForAC" />
-	<bean id="loanCalculateServiceForACPI" class="com.tccz.loan.domainservice.impl.LoanCalculateServiceForACPI" />
-	<bean id="loanCalculateServiceForFragment" class="com.tccz.loan.domainservice.impl.LoanCalculateServiceForFragment" />
-	<bean id="loanService" class="com.tccz.loan.domainservice.impl.LoanServiceImpl" />
-	<bean id="loanCalculateServiceFactory" class="com.tccz.loan.domainservice.LoanCalculateServiceFactory" />
-		
 </beans>
 
 
