@@ -7,6 +7,8 @@ package com.tccz.loan.domain.enums;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 还款方式
  * 
@@ -37,6 +39,17 @@ public enum RepaymentMode {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public static RepaymentMode getByCode(String code) {
+		if (StringUtils.isNotBlank(code)) {
+			for (RepaymentMode mode : values()) {
+				if (StringUtils.equals(code, mode.getCode())) {
+					return mode;
+				}
+			}
+		}
+		return null;
 	}
 
 	public static Map<String, String> toMap() {

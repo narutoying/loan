@@ -4,8 +4,6 @@
  */
 package com.tccz.loan.domain.vo;
 
-import com.tccz.loan.domain.enums.RepaymentMode;
-
 /**
  * 分段还款配置参数
  * 
@@ -19,7 +17,7 @@ public class FragmentRepaymentConfig {
 	/** 除仅付利息月份剩余的月份 */
 	private int leftMonths;
 	/** 还款方式 */
-	private RepaymentMode repaymentMode; // 此处只能是等额本息或等额本金
+	private String repaymentMode; // 此处只能是等额本息或等额本金
 
 	public int getOnlyInterestMonths() {
 		return onlyInterestMonths;
@@ -37,11 +35,12 @@ public class FragmentRepaymentConfig {
 		this.leftMonths = leftMonths;
 	}
 
-	public RepaymentMode getRepaymentMode() {
+	public String getRepaymentMode() {
 		return repaymentMode;
 	}
 
-	public void setRepaymentMode(RepaymentMode repaymentMode) {
+	public void setRepaymentMode(String repaymentMode) {
 		this.repaymentMode = repaymentMode;
 	}
+
 }

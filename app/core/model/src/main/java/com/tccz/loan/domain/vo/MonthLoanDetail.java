@@ -6,6 +6,9 @@ package com.tccz.loan.domain.vo;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.tccz.loan.domain.enums.RepaymentMode;
 
 /**
@@ -16,8 +19,6 @@ import com.tccz.loan.domain.enums.RepaymentMode;
  *          narutoying09@gmail.com Exp $
  */
 public class MonthLoanDetail {
-	/** 序号，从1开始 */
-	private int index;
 	/** 年份 */
 	private int year;
 	/** 月份，从1开始 */
@@ -26,10 +27,14 @@ public class MonthLoanDetail {
 	private RepaymentMode repaymentMode;
 	/** 当月还款金额 = 当月还款本金 + 当月还款利息 */
 	private BigDecimal repaymentMoney;
+	// TODO json序列化无法完整保留小数点数值，待解决
+	private String repaymentMoneyStr;
 	/** 当月还款本金 */
 	private BigDecimal repaymentCapital;
+	private String repaymentCapitalStr;
 	/** 当月还款利息 */
 	private BigDecimal repaymentInterest;
+	private String repaymentInterestStr;
 	/** 备注 */
 	private String remarks;
 
@@ -63,6 +68,7 @@ public class MonthLoanDetail {
 
 	public void setRepaymentCapital(BigDecimal repaymentCapital) {
 		this.repaymentCapital = repaymentCapital;
+		this.repaymentCapitalStr = repaymentCapital.toString();
 	}
 
 	public BigDecimal getRepaymentInterest() {
@@ -71,6 +77,7 @@ public class MonthLoanDetail {
 
 	public void setRepaymentInterest(BigDecimal repaymentInterest) {
 		this.repaymentInterest = repaymentInterest;
+		this.repaymentInterestStr = repaymentInterest.toString();
 	}
 
 	public String getRemarks() {
@@ -87,13 +94,36 @@ public class MonthLoanDetail {
 
 	public void setRepaymentMoney(BigDecimal repaymentMoney) {
 		this.repaymentMoney = repaymentMoney;
+		this.repaymentMoneyStr = repaymentMoney.toString();
 	}
 
-	public int getIndex() {
-		return index;
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public String getRepaymentMoneyStr() {
+		return repaymentMoneyStr;
+	}
+
+	public void setRepaymentMoneyStr(String repaymentMoneyStr) {
+		this.repaymentMoneyStr = repaymentMoneyStr;
+	}
+
+	public String getRepaymentCapitalStr() {
+		return repaymentCapitalStr;
+	}
+
+	public void setRepaymentCapitalStr(String repaymentCapitalStr) {
+		this.repaymentCapitalStr = repaymentCapitalStr;
+	}
+
+	public String getRepaymentInterestStr() {
+		return repaymentInterestStr;
+	}
+
+	public void setRepaymentInterestStr(String repaymentInterestStr) {
+		this.repaymentInterestStr = repaymentInterestStr;
 	}
 }
