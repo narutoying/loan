@@ -20,4 +20,13 @@ public class DateUtil {
 	public static int getMonth(Date date) {
 		return date.getMonth() + 1;
 	}
+
+	/**
+	 * 日期对象月份+1
+	 * 
+	 * @param date
+	 */
+	public static void addMonth(Date date) {
+		date.setMonth(date.getMonth() + 1);
+	}
 }

@@ -20,13 +20,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.tccz.loan.common.util.Money;
 import com.tccz.loan.domain.entity.Loan;
 import com.tccz.loan.domain.enums.RepaymentMode;
+import com.tccz.loan.domain.result.CommonResult;
 import com.tccz.loan.domain.vo.FragmentRepaymentConfig;
 import com.tccz.loan.domain.vo.MonthLoanDetail;
 import com.tccz.loan.domainservice.LoanService;
 import com.tccz.loan.web.form.LoanForm;
 import com.tccz.loan.web.util.JSONUtil;
+import com.tccz.loan.web.util.WebPageCallback;
+import com.tccz.loan.web.util.WebUtil;
 
 /**
  * 
@@ -43,12 +47,30 @@ public class LoanController {
 	private static Logger logger = LoggerFactory
 			.getLogger(LoanController.class);
 
+	@RequestMapping(value = "/showLoanList.htm")
+	public String showLoanList(ModelMap map) {
+		return "showLoanList";
+	}
+
 	@RequestMapping(value = "/addLoan.htm")
 	public String goAddLoan(ModelMap map) {
 		return "addLoan";
 	}
 
-	@RequestMapping(value = "/calLoan.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/addLoan.htm", method = RequestMethod.POST)
+	public String doAddLoan(ModelMap map, LoanForm form) {
+		CommonResult commonResult = loanService
+				.createLoan(convertToDomain(form));
+		return WebUtil.goPage(map, commonResult, new WebPageCallback() {
+
+			@Override
+			public String successPage() {
+				return "redirect:/showLoanList.htm";
+			}
+		});
+	}
+
+	@RequestMapping(value = "/calLoan.json", method = RequestMethod.POST)
 	public void calLoan(HttpServletResponse res, ModelMap map, LoanForm form) {
 		List<MonthLoanDetail> calculate = loanService
 				.calculate(convertToDomain(form));
@@ -57,7 +79,7 @@ public class LoanController {
 
 	private Loan convertToDomain(LoanForm form) {
 		Loan result = new Loan();
-		result.setAmount(new BigDecimal(form.getAmount()));
+		result.setAmount(new Money(form.getAmount()));
 		result.setAnnualRate(new BigDecimal(form.getAnnualRate())
 				.divide(new BigDecimal("100")));
 		result.setExecutor(form.getExecutor());

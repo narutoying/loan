@@ -18,5 +18,10 @@
       http://code.alibabatech.com/schema/dubbo
       http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-autowire="byName">
-	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.htm"/>
+			<bean class="com.tccz.loan.web.interceptor.CommonWebInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

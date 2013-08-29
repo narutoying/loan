@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="GBK"?>
+<table sqlname="loan">
+
+	<operation name="getById">
+		<sql><![CDATA[
+			select * from loan where id=?
+		]]></sql>
+	</operation>
+	
+	<operation name="insert">
+		<sql><![CDATA[
+			insert into loan(loaner, executor, amount, currency, term, annual_rate, first_repayment_date, repayment_mode, repayment_config) values(?, ?, ?, ?, ?, ?, ?, ?, ?)
+		]]></sql>
+	</operation>
+	
+	<!--
+	<operation name="getByCondition" multiplicity="many" paging="true" parameterClass="map">
+		<extraparams>
+			<param name="loanname" javatype="java.lang.String"/>
+		 </extraparams>
+		<sql><![CDATA[
+			select * from loan
+		]]></sql>
+		<sqlmap><![CDATA[
+          select * from loan
+			<dynamic prepend="WHERE">
+				<isNotEmpty prepend="and" property="loanname">
+					${cdata-start}
+						loanname = #loanname#
+					${cdata-end}
+				</isNotEmpty>
+			</dynamic>
+			order by id DESC
+			limit #pageNum#, #pageSize#
+		 ]]></sqlmap>
+	</operation>
+	-->
+	
+</table>

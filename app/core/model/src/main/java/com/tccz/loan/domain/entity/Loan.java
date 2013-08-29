@@ -7,6 +7,7 @@ package com.tccz.loan.domain.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.tccz.loan.common.util.Money;
 import com.tccz.loan.domain.enums.RepaymentMode;
 
 /**
@@ -17,6 +18,7 @@ import com.tccz.loan.domain.enums.RepaymentMode;
  *          $
  */
 public class Loan {
+	private int id;
 	/** 贷款人 */
 	private String loaner;
 
@@ -24,7 +26,7 @@ public class Loan {
 	private String executor;
 
 	/** 贷款金额 */
-	private BigDecimal amount;
+	private Money amount;
 
 	/** 贷款时间，单位（月） */
 	private int term;
@@ -55,14 +57,6 @@ public class Loan {
 
 	public void setExecutor(String executor) {
 		this.executor = executor;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 
 	public int getTerm() {
@@ -103,6 +97,22 @@ public class Loan {
 
 	public void setRepaymentConfig(Object repaymentConfig) {
 		this.repaymentConfig = repaymentConfig;
+	}
+
+	public Money getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Money amount) {
+		this.amount = amount;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	// TODO

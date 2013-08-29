@@ -27,6 +27,7 @@
 	<bean id="loanCalculateServiceForFragment" class="com.tccz.loan.domainservice.impl.LoanCalculateServiceForFragment" />
 	<bean id="loanService" class="com.tccz.loan.domainservice.impl.LoanServiceImpl" />
 	<bean id="loanCalculateServiceFactory" class="com.tccz.loan.domainservice.LoanCalculateServiceFactory" />
+	<bean id="commonManageTemplate" class="com.tccz.loan.util.template.impl.CommonManageTemplateImpl" />
 		
 </beans>
 

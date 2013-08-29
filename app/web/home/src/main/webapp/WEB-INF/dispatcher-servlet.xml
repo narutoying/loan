@@ -53,14 +53,16 @@
      </property>
     </bean>
 	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-		<property name="cache" value="false" />
-		<property name="prefix" value="" />
-		<property name="suffix" value=".vm" />
-
-		<!-- 如果你需要使用Spring 对 Velocity宏命令的支持, 将这个属性设为true -->
-		<property name="exposeSpringMacroHelpers" value="true" />
-         <property name="contentType" value="text/html;charset=UTF-8" />
+		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+			<property name="layoutUrl" value="layout/default.vm" />  
+			<property name="cache" value="false" />
+			<property name="prefix" value="" />
+			<property name="suffix" value=".vm" />
+			<!-- 如果你需要使用Spring 对 Velocity宏命令的支持, 将这个属性设为true -->
+			<property name="exposeSpringMacroHelpers" value="true" />
+	         <property name="contentType" value="text/html;charset=UTF-8" />
+			 <!-- velocity toolbox -->  
+    		<property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>  
 	</bean>
   
 </beans>  

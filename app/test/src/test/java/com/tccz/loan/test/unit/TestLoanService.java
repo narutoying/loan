@@ -10,6 +10,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import com.tccz.loan.common.util.Money;
 import com.tccz.loan.domain.enums.RepaymentMode;
 import com.tccz.loan.domain.vo.FragmentRepaymentConfig;
 import com.tccz.loan.domain.vo.LoanCalculateInput;
@@ -42,7 +43,7 @@ public class TestLoanService extends TestCase {
 	public void testFragment() {
 		LoanCalculateServiceForFragment service = new LoanCalculateServiceForFragment();
 		LoanCalculateInput input = new LoanCalculateInput();
-		BigDecimal amount = new BigDecimal("50000");
+		Money amount = new Money("50000");
 		BigDecimal annualRate = new BigDecimal("0.06");
 		int term = 60;
 		Date firstRepaymentDate = new Date();

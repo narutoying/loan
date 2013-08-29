@@ -17,10 +17,10 @@
     <!-- ========================================================== -->
     <typemap from="java.sql.Date" to="java.util.Date"/>
     <typemap from="java.sql.Timestamp" to="java.util.Date"/>
-    <typemap from="java.math.BigDecimal" to="long"/>
+    <!-- <typemap from="java.math.BigDecimal" to="long"/> -->
     <typemap from="byte" to="int"/>
     <typemap from="short" to="int"/>
     <appName>loan</appName>
     
-    <include table="tables/test.xml" />
+    <include table="tables/loan.xml" />
 </tables>

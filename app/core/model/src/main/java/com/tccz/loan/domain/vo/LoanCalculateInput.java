@@ -7,6 +7,8 @@ package com.tccz.loan.domain.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.tccz.loan.common.util.Money;
+
 /**
  * 贷款计算输入
  * 
@@ -16,7 +18,7 @@ import java.util.Date;
  */
 public class LoanCalculateInput {
 	/** 贷款金额 */
-	private BigDecimal amount;
+	private Money amount;
 
 	/** 贷款时间，单位（月） */
 	private int term;
@@ -24,19 +26,14 @@ public class LoanCalculateInput {
 	/** 年利率 */
 	private BigDecimal annualRate;
 
+	/** 月利率 */
+	private BigDecimal monthRate;
+
 	/** 首个还款日 */
 	private Date firstRepaymentDate;
 
 	/** 对应于指定还款方式的配置参数 */
 	private Object repaymentConfig;
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
 
 	public int getTerm() {
 		return term;
@@ -68,5 +65,21 @@ public class LoanCalculateInput {
 
 	public void setRepaymentConfig(Object repaymentConfig) {
 		this.repaymentConfig = repaymentConfig;
+	}
+
+	public Money getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Money amount) {
+		this.amount = amount;
+	}
+
+	public BigDecimal getMonthRate() {
+		return monthRate;
+	}
+
+	public void setMonthRate(BigDecimal monthRate) {
+		this.monthRate = monthRate;
 	}
 }

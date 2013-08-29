@@ -1,0 +1,76 @@
+#set($masterId = "loanManage")
+<h2>新增贷款</h2>
+<div>
+<form id="addLoanForm" action="addLoan.htm" method="POST">
+<table>
+	<tr>
+        <th>贷款人</th>
+		<td>
+			<input type="text" name="loaner" id="loaner" alt='{"notBlank":true}' />
+		</td>
+	</tr>
+	<tr>
+        <th>受理人</th>
+		<td>
+			<input type="text" name="executor" id="executor" alt='{"notBlank":true}' />
+		</td>
+	</tr>
+	<tr>
+        <th>贷款金额</th>
+		<td>
+			<input type="text" name="amount" id="amount" value="300000" alt='{"decimal":true}' /> 元
+		</td>
+	</tr>
+	<tr>
+        <th>贷款时间</th>
+		<td>
+			<input type="text" name="term" id="term" value="360" alt='{"posInt":true}' /> 月
+		</td>
+	</tr>
+	<tr>
+        <th>年利率</th>
+		<td>
+			<input type="text" name="annualRate" id="annualRate" value="6.10" alt='{"decimal":true}' /> %
+		</td>
+	</tr>
+	<tr>
+        <th>首个还款日</th>
+		<td>
+			<input type="text" name="firstRepaymentDate" id="firstRepaymentDate" readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" alt='{"notBlank":true}'/>
+		</td>
+	</tr>
+	<tr>
+        <th>还款方式</th>
+		<td>
+			<select id="repaymentMode" name="repaymentMode">
+                <option value="ACPI">等额本息</option>
+                <option value="AC">等额本金</option>
+                <option value="FRAGMENT">分段</option>
+            </select>
+		</td>
+	</tr>
+	<tr class="fragment">
+        <th>仅利息</th>
+		<td>
+			<input type="text" name="onlyInterestMonths" id="onlyInterestMonths" /> 月
+		</td>
+	</tr>
+	<tr class="fragment">
+        <th>等额本息</th>
+		<td>
+			<input type="text" name="leftMonths" id="leftMonths" /> 月
+		</td>
+	</tr>
+	<tr>
+        <td colspan="2">
+            <button class="btn btn-success" type="button" id="preCalBtn" onclick="preCal();">预计算</button>
+            <button class="btn btn-info" type="button" id="printCalBtn" onclick="printCal();">打印</button>
+            <button class="btn btn-primary" type="button" id="addLoanBtn" >新增贷款</button>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+<div id="preCalResult">
+	
+</div>

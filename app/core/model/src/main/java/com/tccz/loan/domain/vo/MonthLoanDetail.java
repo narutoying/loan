@@ -4,11 +4,10 @@
  */
 package com.tccz.loan.domain.vo;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.tccz.loan.common.util.Money;
 import com.tccz.loan.domain.enums.RepaymentMode;
 
 /**
@@ -26,14 +25,14 @@ public class MonthLoanDetail {
 	/** 还款方式 */
 	private RepaymentMode repaymentMode;
 	/** 当月还款金额 = 当月还款本金 + 当月还款利息 */
-	private BigDecimal repaymentMoney;
+	private Money repaymentMoney;
 	// TODO json序列化无法完整保留小数点数值，待解决
 	private String repaymentMoneyStr;
 	/** 当月还款本金 */
-	private BigDecimal repaymentCapital;
+	private Money repaymentCapital;
 	private String repaymentCapitalStr;
 	/** 当月还款利息 */
-	private BigDecimal repaymentInterest;
+	private Money repaymentInterest;
 	private String repaymentInterestStr;
 	/** 备注 */
 	private String remarks;
@@ -62,22 +61,22 @@ public class MonthLoanDetail {
 		this.repaymentMode = repaymentMode;
 	}
 
-	public BigDecimal getRepaymentCapital() {
+	public Money getRepaymentCapital() {
 		return repaymentCapital;
 	}
 
-	public void setRepaymentCapital(BigDecimal repaymentCapital) {
+	public void setRepaymentCapital(Money repaymentCapital) {
 		this.repaymentCapital = repaymentCapital;
-		this.repaymentCapitalStr = repaymentCapital.toString();
+		this.repaymentCapitalStr = repaymentCapital.getAmount().toString();
 	}
 
-	public BigDecimal getRepaymentInterest() {
+	public Money getRepaymentInterest() {
 		return repaymentInterest;
 	}
 
-	public void setRepaymentInterest(BigDecimal repaymentInterest) {
+	public void setRepaymentInterest(Money repaymentInterest) {
 		this.repaymentInterest = repaymentInterest;
-		this.repaymentInterestStr = repaymentInterest.toString();
+		this.repaymentInterestStr = repaymentInterest.getAmount().toString();
 	}
 
 	public String getRemarks() {
@@ -88,13 +87,13 @@ public class MonthLoanDetail {
 		this.remarks = remarks;
 	}
 
-	public BigDecimal getRepaymentMoney() {
+	public Money getRepaymentMoney() {
 		return repaymentMoney;
 	}
 
-	public void setRepaymentMoney(BigDecimal repaymentMoney) {
+	public void setRepaymentMoney(Money repaymentMoney) {
 		this.repaymentMoney = repaymentMoney;
-		this.repaymentMoneyStr = repaymentMoney.toString();
+		this.repaymentMoneyStr = repaymentMoney.getAmount().toString();
 	}
 
 	@Override

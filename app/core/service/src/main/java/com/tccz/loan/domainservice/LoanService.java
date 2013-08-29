@@ -7,6 +7,7 @@ package com.tccz.loan.domainservice;
 import java.util.List;
 
 import com.tccz.loan.domain.entity.Loan;
+import com.tccz.loan.domain.result.CommonResult;
 import com.tccz.loan.domain.vo.MonthLoanDetail;
 
 /**
@@ -23,4 +24,21 @@ public interface LoanService {
 	 * @return
 	 */
 	List<MonthLoanDetail> calculate(Loan loan);
+
+	/**
+	 * 获取贷款对象
+	 * 
+	 * @param loanId
+	 * @return
+	 */
+	Loan getLoan(int loanId);
+
+	/**
+	 * 创建贷款对象并持久化
+	 * 
+	 * @param loan
+	 * @return
+	 */
+	CommonResult createLoan(Loan loan);
+	
 }
