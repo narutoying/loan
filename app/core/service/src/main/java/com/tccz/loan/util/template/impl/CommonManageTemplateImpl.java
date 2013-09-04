@@ -7,8 +7,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.tccz.loan.domain.exception.CommonException;
-import com.tccz.loan.domain.exception.ResultCodeEnum;
+import com.tccz.loan.common.util.exception.CommonException;
+import com.tccz.loan.common.util.exception.ResultCodeEnum;
 import com.tccz.loan.domain.result.CommonResult;
 import com.tccz.loan.util.template.CommonManageTemplate;
 import com.tccz.loan.util.template.callback.CommonManageCallback;

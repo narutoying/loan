@@ -14,8 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.tccz.loan.common.util.ArrayUtil;
 import com.tccz.loan.common.util.StringUtil;
-import com.tccz.loan.domain.exception.CommonException;
-import com.tccz.loan.domain.exception.ResultCodeEnum;
+import com.tccz.loan.common.util.exception.CommonException;
+import com.tccz.loan.common.util.exception.ResultCodeEnum;
 
 /**
  * 参数检测工具类

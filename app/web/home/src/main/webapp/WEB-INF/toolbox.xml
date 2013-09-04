@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <toolbox> 
 	<tool>
-	   <key>date</key>
+	   <key>dateUtil</key>
 	   <scope>application</scope>
 	   <class>org.apache.velocity.tools.generic.DateTool</class>
 	</tool>

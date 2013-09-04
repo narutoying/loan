@@ -1,0 +1,99 @@
+<script type="text/javascript">
+function getOperationType() {
+	return "$!operation";
+}
+</script>
+#set($masterId = "loanManage")
+<h2>
+	#if($!operation == "add")新增#elseif($!operation == "show")查询#end
+贷款
+</h2>
+<div>
+<form id="addLoanForm" action="addLoan.htm" method="POST">
+<table>
+	<tr>
+        <th>贷款人</th>
+		<td>
+			<input type="text" name="loaner" id="loaner" alt='{"notBlank":true}' value="$!loan.loaner"/>
+		</td>
+	</tr>
+	<tr>
+        <th>受理人</th>
+		<td>
+			<input type="text" name="executor" id="executor" alt='{"notBlank":true}'  value="$!loan.executor"/>
+		</td>
+	</tr>
+	<tr>
+        <th>贷款金额</th>
+		<td>
+			<input type="text" name="amount" id="amount" value="$!loan.amount.toString()" alt='{"decimal":true}' /> 元
+		</td>
+	</tr>
+	<tr>
+        <th>贷款期限</th>
+		<td>
+			<input type="text" name="term" id="term" value="$!loan.term" alt='{"posInt":true}' /> 月
+		</td>
+	</tr>
+	<tr>
+        <th>年利率</th>
+		<td>
+			#set($annualRate = $!loan.getAnnualRateString())
+			<input type="text" name="annualRate" id="annualRate" value="$!annualRate" alt='{"decimal":true}' /> %
+		</td>
+	</tr>
+	<tr>
+        <th>放款日</th>
+		<td>
+			<input type="text" name="releaseDate" id="releaseDate" readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" alt='{"notBlank":true}' #if($!{loan.releaseDate})value="$dateUtil.format('yyyy-MM-dd', $!loan.releaseDate)"#end/>
+		</td>
+	</tr>
+	<tr>
+        <th>首个还款日</th>
+		<td>
+			<input type="text" name="firstRepaymentDate" id="firstRepaymentDate" readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" alt='{"notBlank":true}' #if($!{loan.firstRepaymentDate})value="$dateUtil.format('yyyy-MM-dd', $!loan.firstRepaymentDate)"#end/>
+		</td>
+	</tr>
+	<tr>
+        <th>还款方式</th>
+		<td>
+			#select("repaymentMode" $!modeMap $!loan.repaymentMode.toString() "------请选择还款方式------" "")
+		</td>
+	</tr>
+	<tr class="fragment">
+        <th>仅利息</th>
+		<td>
+			<input type="text" name="onlyInterestMonths" id="onlyInterestMonths" value="$!loan.repaymentConfig.onlyInterestMonths" /> 月
+		</td>
+	</tr>
+	<tr class="fragment">
+        <th>等额本息</th>
+		<td>
+			<input type="text" name="leftMonths" id="leftMonths" value="$!loan.repaymentConfig.leftMonths" /> 月
+		</td>
+	</tr>
+	<tr>
+        <td colspan="2">
+            <button class="btn btn-success" type="button" id="preCalBtn" onclick="preCal();">预计算</button>
+            <button class="btn btn-info" type="button" id="printCalBtn" onclick="downloanLoan();">下载</button>
+			#if($!operation == "add")
+            <button class="btn btn-primary" type="button" id="addLoanBtn" >新增贷款</button>
+			#end
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+<div id="preCalResult"></div>
+<form id="downloanForm" method="POST" action="downloadLoan.htm">
+	<input type="hidden" name="loaner" id="d_loaner"/>
+    <input type="hidden" name="executor" id="d_executor"/>
+    <input type="hidden" name="amount" id="d_amount"/> 
+    <input type="hidden" name="term" id="d_term" /> 
+    <input type="hidden" name="annualRate" id="d_annualRate"/> 
+    <input type="hidden" name="firstRepaymentDate" id="d_firstRepaymentDate" />
+    <input type="hidden" name="repaymentMode" id="d_repaymentMode" />
+    <input type="hidden" name="onlyInterestMonths" id="d_onlyInterestMonths"  />
+    <input type="hidden" name="leftMonths" id="d_leftMonths" /> 
+	<input type="hidden" name="releaseDate" id="d_releaseDate" />
+</form>

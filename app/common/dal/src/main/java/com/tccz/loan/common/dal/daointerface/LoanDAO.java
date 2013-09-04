@@ -5,8 +5,10 @@
 package com.tccz.loan.common.dal.daointerface;
 
 // auto generated imports
-import com.tccz.loan.common.dal.dataobject.LoanDO;
 import org.springframework.dao.DataAccessException;
+
+import com.tccz.loan.common.dal.dataobject.LoanDO;
+import com.tccz.loan.dal.util.PageList;
 
 /**
  * A dao interface provides methods to access database table <tt>loan</tt>.
@@ -48,12 +50,46 @@ public interface LoanDAO {
    	 *  <tt></tt>
 	 *  <p>
 	 *  The sql statement for this operation is <br>
-	 *  <tt>insert into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config) values (?, ?, ?, ?, ?, ?, ?, ?, ?)</tt>
+	 *  <tt>insert into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config,create_time,release_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)</tt>
 	 *
 	 *	@param loan
 	 *	@return int
 	 *	@throws DataAccessException
 	 */	 
     public int insert(LoanDO loan) throws DataAccessException;
+
+	/**
+	 *  Delete records from DB table <tt>loan</tt>.
+	 *
+   	 *  <p>
+   	 *  Description for this operation is<br>
+   	 *  <tt></tt>
+	 *  <p>
+	 *  The sql statement for this operation is <br>
+	 *  <tt>delete from loan where (id = ?)</tt>
+	 *
+	 *	@param id
+	 *	@return int
+	 *	@throws DataAccessException
+	 */	 
+    public int delete(int id) throws DataAccessException;
+
+	/**
+	 *  Query DB table <tt>loan</tt> for records.
+	 *
+   	 *  <p>
+   	 *  Description for this operation is<br>
+   	 *  <tt></tt>
+	 *  <p>
+	 *  The sql statement for this operation is <br>
+	 *  <tt>select * from loan</tt>
+	 *
+	 *	@param loaner
+	 *	@param pageSize
+	 *	@param pageNum
+	 *	@return PageList
+	 *	@throws DataAccessException
+	 */	 
+    public PageList getByCondition(String loaner, int pageSize, int pageNum) throws DataAccessException;
 
 }

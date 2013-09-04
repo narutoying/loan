@@ -1,4 +1,4 @@
-package com.tccz.loan.domain.exception;
+package com.tccz.loan.common.util.exception;
 
 /**
  * 统一业务异常类

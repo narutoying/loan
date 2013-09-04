@@ -34,6 +34,9 @@ public class Loan {
 	/** 年利率 */
 	private BigDecimal annualRate;
 
+	/** 放款日 */
+	private Date releaseDate;
+
 	/** 首个还款日 */
 	private Date firstRepaymentDate;
 
@@ -42,6 +45,12 @@ public class Loan {
 
 	/** 对应于指定还款方式的配置参数 */
 	private Object repaymentConfig;
+
+	private Date createTime;
+
+	public String getAnnualRateString() {
+		return annualRate.multiply(new BigDecimal(100)).setScale(2).toString();
+	}
 
 	public String getLoaner() {
 		return loaner;
@@ -113,6 +122,22 @@ public class Loan {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	// TODO

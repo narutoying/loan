@@ -77,6 +77,16 @@ public class LoanDO {
 	 */
 	private String repaymentConfig;
 
+	/**
+	 * This property corresponds to db column <tt>create_time</tt>.
+	 */
+	private Date createTime;
+
+	/**
+	 * This property corresponds to db column <tt>release_date</tt>.
+	 */
+	private Date releaseDate;
+
     //========== getters and setters ==========
 
     /**
@@ -257,5 +267,41 @@ public class LoanDO {
      */
 	public void setRepaymentConfig(String repaymentConfig) {
 		this.repaymentConfig = repaymentConfig;
+	}
+
+    /**
+     * Getter method for property <tt>createTime</tt>.
+     *
+     * @return property value of createTime
+     */
+	public Date getCreateTime() {
+		return createTime;
+	}
+	
+	/**
+	 * Setter method for property <tt>createTime</tt>.
+	 * 
+	 * @param createTime value to be assigned to property createTime
+     */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+    /**
+     * Getter method for property <tt>releaseDate</tt>.
+     *
+     * @return property value of releaseDate
+     */
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+	
+	/**
+	 * Setter method for property <tt>releaseDate</tt>.
+	 * 
+	 * @param releaseDate value to be assigned to property releaseDate
+     */
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 }

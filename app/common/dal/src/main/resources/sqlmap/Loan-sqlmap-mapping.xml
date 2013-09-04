@@ -35,6 +35,8 @@
         <result property="firstRepaymentDate" column="first_repayment_date" javaType="java.util.Date" jdbcType="datetime"/>
         <result property="repaymentMode" column="repayment_mode" javaType="java.lang.String" jdbcType="char"/>
         <result property="repaymentConfig" column="repayment_config" javaType="java.lang.String" jdbcType="text"/>
+        <result property="createTime" column="create_time" javaType="java.util.Date" jdbcType="datetime"/>
+        <result property="releaseDate" column="release_date" javaType="java.util.Date" jdbcType="datetime"/>
     </resultMap>
 
 
@@ -50,10 +52,44 @@
 
     <!-- mapped statement for IbatisLoanDAO.insert -->
 	<insert id="MS-LOAN-INSERT">
-	insert /*MS-LOAN-LOAN-INSERT*/ into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config) values (#loaner#, #executor#, #amount#, #currency#, #term#, #annualRate#, #firstRepaymentDate#, #repaymentMode#, #repaymentConfig#)
+	insert /*MS-LOAN-LOAN-INSERT*/ into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config,create_time,release_date) values (#loaner#, #executor#, #amount#, #currency#, #term#, #annualRate#, #firstRepaymentDate#, #repaymentMode#, #repaymentConfig#, CURRENT_TIMESTAMP, #releaseDate#)
     <selectKey resultClass="int" keyProperty="id">
 		select last_insert_id() as id
     </selectKey>
 	</insert>
+
+    <!-- mapped statement for IbatisLoanDAO.delete -->
+    <delete id="MS-LOAN-DELETE">
+    <![CDATA[
+        delete /*MS-LOAN-LOAN-DELETE*/ from loan where (id = #value#)
+    ]]>
+    </delete>
+
+    <!-- mapped statement for IbatisLoanDAO.getByCondition -->
+    <select id="MS-LOAN-GET-BY-CONDITION" resultMap="RM-LOAN">
+        select /*MS-LOAN-LOAN-GET-BY-CONDITION*/ * from loan
+			<dynamic prepend="WHERE">
+				<isNotEmpty prepend="and" property="loaner">
+					<![CDATA[
+						loaner = #loaner#
+					]]>
+				</isNotEmpty>
+			</dynamic>
+			order by id DESC
+			limit #pageNum#, #pageSize#
+    </select>
+
+    <!-- mapped statement for IbatisLoanDAO.getByCondition, needed by paging -->
+    <select id="MS-LOAN-LOAN-GET-BY-CONDITION-COUNT-FOR-PAGING" resultClass="int">
+        select /*MS-LOAN-LOAN-GET-BY-CONDITION-COUNT-FOR-PAGING*/ count(*) from loan
+			<dynamic prepend="WHERE">
+				<isNotEmpty prepend="and" property="loaner">
+					<![CDATA[
+						loaner = #loaner#
+					]]>
+				</isNotEmpty>
+			</dynamic>
+			
+    </select>
 
 </sqlMap>

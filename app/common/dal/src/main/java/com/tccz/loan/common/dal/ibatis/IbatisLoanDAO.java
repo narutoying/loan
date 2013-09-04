@@ -4,13 +4,16 @@
  */
 package com.tccz.loan.common.dal.ibatis;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.tccz.loan.common.dal.daointerface.LoanDAO;
-
-// auto generated imports
 import com.tccz.loan.common.dal.dataobject.LoanDO;
-import org.springframework.dao.DataAccessException;
+import com.tccz.loan.dal.util.PageList;
+import com.tccz.loan.dal.util.Paginator;
 
 /**
  * An ibatis based implementation of dao interface <tt>com.tccz.loan.common.dal.daointerface.LoanDAO</tt>.
@@ -56,7 +59,7 @@ public class IbatisLoanDAO extends SqlMapClientDaoSupport implements LoanDAO {
    	 *  <tt></tt>
 	 *  <p>
 	 *  The sql statement for this operation is <br>
-	 *  <tt>insert into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config) values (?, ?, ?, ?, ?, ?, ?, ?, ?)</tt>
+	 *  <tt>insert into loan(loaner,executor,amount,currency,term,annual_rate,first_repayment_date,repayment_mode,repayment_config,create_time,release_date) values (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)</tt>
 	 *
 	 *	@param loan
 	 *	@return int
@@ -70,6 +73,67 @@ public class IbatisLoanDAO extends SqlMapClientDaoSupport implements LoanDAO {
         getSqlMapClientTemplate().insert("MS-LOAN-INSERT", loan);
 
         return loan.getId();
+    }
+
+	/**
+	 *  Delete records from DB table <tt>loan</tt>.
+	 *
+   	 *  <p>
+   	 *  Description for this operation is<br>
+   	 *  <tt></tt>
+	 *  <p>
+	 *  The sql statement for this operation is <br>
+	 *  <tt>delete from loan where (id = ?)</tt>
+	 *
+	 *	@param id
+	 *	@return int
+	 *	@throws DataAccessException
+	 */	 
+    public int delete(int id) throws DataAccessException {
+        Integer param = new Integer(id);
+
+        return getSqlMapClientTemplate().delete("MS-LOAN-DELETE", param);
+    }
+
+	/**
+	 *  Query DB table <tt>loan</tt> for records.
+	 *
+   	 *  <p>
+   	 *  Description for this operation is<br>
+   	 *  <tt></tt>
+	 *  <p>
+	 *  The sql statement for this operation is <br>
+	 *  <tt>select * from loan</tt>
+	 *
+	 *	@param loaner
+	 *	@param pageSize
+	 *	@param pageNum
+	 *	@return PageList
+	 *	@throws DataAccessException
+	 */	 
+    public PageList getByCondition(String loaner, int pageSize, int pageNum) throws DataAccessException {
+        Map param = new HashMap();
+
+        param.put("loaner", loaner);
+        param.put("pageSize", new Integer(pageSize));
+        param.put("pageNum", new Integer(pageNum));
+
+        Paginator paginator = new Paginator();
+        paginator.setItemsPerPage(pageSize);
+        paginator.setPage(pageNum / pageSize + 1);
+
+        paginator.setItems(((Integer) getSqlMapClientTemplate().queryForObject("MS-LOAN-LOAN-GET-BY-CONDITION-COUNT-FOR-PAGING", param)).intValue());
+        
+        PageList  pageList = new PageList();
+        pageList.setPaginator(paginator);
+        
+        if (paginator.getBeginIndex() <= paginator.getItems()) {
+            param.put("startRow", new Integer(paginator.getBeginIndex()));
+            param.put("endRow", new Integer(paginator.getEndIndex()));
+            pageList.addAll(getSqlMapClientTemplate().queryForList("MS-LOAN-GET-BY-CONDITION", param));
+        }
+        
+        return pageList;
     }
 
 }

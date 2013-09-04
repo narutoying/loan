@@ -46,6 +46,7 @@
       <property name="resourceLoaderPath" value="WEB-INF/templates/velocity"/>
       <property name="velocityProperties">
       <props>
+      	 <prop key="velocimacro.library">macro.vm</prop>
          <prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->
          <prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 -->
          <prop key="contentType">text/html;charset=UTF-8</prop><!-- contentType -->

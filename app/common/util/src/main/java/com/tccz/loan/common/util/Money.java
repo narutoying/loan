@@ -109,6 +109,11 @@ public class Money implements Serializable, Comparable {
 		this.cent = cent;
 	}
 
+	public Money(long cent, Currency currency) {
+		this.currency = currency;
+		this.cent = cent;
+	}
+
 	/**
 	 * 构造器。
 	 * 

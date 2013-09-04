@@ -27,7 +27,8 @@ public class LoanForm {
 
 	/** 年利率（百分数） */
 	private String annualRate;
-
+	/** 放款日 */
+	private Date releaseDate;
 	/** 首个还款日 */
 	private Date firstRepaymentDate;
 
@@ -108,6 +109,14 @@ public class LoanForm {
 
 	public void setLeftMonths(Integer leftMonths) {
 		this.leftMonths = leftMonths;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 }

@@ -1,6 +1,11 @@
 package com.tccz.loan.web;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.tccz.loan.common.util.Money;
+import com.tccz.loan.common.util.PageList;
 import com.tccz.loan.domain.entity.Loan;
 import com.tccz.loan.domain.enums.RepaymentMode;
 import com.tccz.loan.domain.result.CommonResult;
 import com.tccz.loan.domain.vo.FragmentRepaymentConfig;
+import com.tccz.loan.domain.vo.LoanQueryCondition;
 import com.tccz.loan.domain.vo.MonthLoanDetail;
 import com.tccz.loan.domainservice.LoanService;
 import com.tccz.loan.web.form.LoanForm;
@@ -41,6 +48,10 @@ import com.tccz.loan.web.util.WebUtil;
 @Controller
 public class LoanController {
 
+	private static final String REDIRECT_SHOW_LOAN_LIST_HTM = "redirect:/showLoanList.htm";
+
+	private static final String OPERATION = "operation";
+
 	@Autowired
 	private LoanService loanService;
 
@@ -48,13 +59,18 @@ public class LoanController {
 			.getLogger(LoanController.class);
 
 	@RequestMapping(value = "/showLoanList.htm")
-	public String showLoanList(ModelMap map) {
+	public String showLoanList(ModelMap map, LoanQueryCondition condition) {
+		PageList<Loan> pageList = loanService
+				.queryReportsByCondition(condition);
+		map.addAttribute("pageList", pageList);
 		return "showLoanList";
 	}
 
 	@RequestMapping(value = "/addLoan.htm")
-	public String goAddLoan(ModelMap map) {
-		return "addLoan";
+	public String goAddLoan(ModelMap modelMap) {
+		modelMap.addAttribute(OPERATION, "add");
+		modelMap.addAttribute("modeMap", RepaymentMode.toMap());
+		return "oneLoan";
 	}
 
 	@RequestMapping(value = "/addLoan.htm", method = RequestMethod.POST)
@@ -65,9 +81,29 @@ public class LoanController {
 
 			@Override
 			public String successPage() {
-				return "redirect:/showLoanList.htm";
+				return REDIRECT_SHOW_LOAN_LIST_HTM;
 			}
 		});
+	}
+
+	@RequestMapping(value = "/deleteLoan.htm")
+	public String deleteLoan(ModelMap modelMap, Integer loanId) {
+		CommonResult commonResult = loanService.deleteLoan(loanId);
+		return WebUtil.goPage(modelMap, commonResult, new WebPageCallback() {
+
+			@Override
+			public String successPage() {
+				return REDIRECT_SHOW_LOAN_LIST_HTM;
+			}
+		});
+	}
+
+	@RequestMapping(value = "/showLoan.htm")
+	public String showLoan(ModelMap modelMap, Integer loanId) {
+		modelMap.addAttribute(OPERATION, "show");
+		modelMap.addAttribute("loan", loanService.getLoan(loanId));
+		modelMap.addAttribute("modeMap", RepaymentMode.toMap());
+		return "oneLoan";
 	}
 
 	@RequestMapping(value = "/calLoan.json", method = RequestMethod.POST)
@@ -75,6 +111,24 @@ public class LoanController {
 		List<MonthLoanDetail> calculate = loanService
 				.calculate(convertToDomain(form));
 		JSONUtil.writeBackJsonWithConfig(res, calculate);
+	}
+
+	@RequestMapping(value = "/downloadLoan.htm", method = RequestMethod.POST)
+	public void download(HttpServletResponse response, ModelMap map,
+			LoanForm form) throws UnsupportedEncodingException {
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;fileName="
+				+ URLEncoder.encode("贷款明细", "UTF-8") + ".xls");
+		try {
+			OutputStream os = response.getOutputStream();
+			loanService.exportCalculateResult(convertToDomain(form), os);
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Loan convertToDomain(LoanForm form) {
@@ -88,6 +142,7 @@ public class LoanController {
 		result.setRepaymentConfig(buildConfig(form));
 		result.setRepaymentMode(RepaymentMode.getByCode(form.getRepaymentMode()));
 		result.setTerm(form.getTerm());
+		result.setReleaseDate(form.getReleaseDate());
 		return result;
 	}
 

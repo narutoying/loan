@@ -1,0 +1,65 @@
+#set($loanList = $pageList.dataList)
+#set($paginator = $pageList.paginator)
+#set($masterId = "loanManage")
+<a class="btn btn-success" style="color:white" href="addLoan.htm">新增贷款</a>
+<div class="normal">
+	<form id="loanListForm" method="get" action="showLoanList.htm">
+	#if($!paginator.page > 0)
+	<input type="hidden" name="currentPage" value="$!paginator.page">
+    #else
+    	<input type="hidden" name="currentPage" value="1">
+	#end
+	</form>
+</div>
+<div style="padding-left:20px;">
+	 <table class="table table-bordered normalTable" style="width:800px">
+    	<tr>
+            <th width="">序号</th>
+            <th width="">贷款人</th>
+            <th width="">受理人</th>
+            <th width="">贷款金额（元）</th>
+            <th width="">贷款期限（年）</th>
+            <th width="">年利率（%）</th>
+            <th width="">还款方式</th>
+            <th width="">创建时间</th>
+            <th width="">操作</th>
+    	</tr>
+		#if($loanList && $loanList.size() > 0)
+			#foreach($item in $$loanList)
+				#if($item)
+				<tr>
+					<td>
+						<a href="showLoan.htm?loanId=$!item.id">$item.id</a>
+					</td>
+					<td>
+						$item.loaner
+					</td>
+					<td>
+						$item.executor
+					</td>
+					<td>
+						$item.amount.toString()
+					</td>
+					<td>
+						$item.term
+					</td>
+					<td>
+						$item.getAnnualRateString()
+					</td>
+					<td>
+						$item.repaymentMode.description
+					</td>
+					<td>
+						$dateUtil.format('yyyy-MM-dd HH:mm', $!item.createTime)
+					</td>
+					<td>
+						<a class="btn btn-primary" style="color:white" href="showLoan.htm?loanId=$!item.id">查看</a>
+						<a class="btn btn-info" style="color:white" href="deleteLoan.htm?loanId=$!item.id" onclick="if(!confirm('确定要删除此条数据吗？')){return false;}">删除</a>
+					</td>
+				</tr>
+				#end
+			#end
+		#end
+    </table>
+	#pagingBar($paginator "loanListForm") 
+</div>

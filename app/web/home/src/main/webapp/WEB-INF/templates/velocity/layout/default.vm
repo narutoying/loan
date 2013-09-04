@@ -34,7 +34,7 @@
 			<div id="nav">
             	<ul id="menu" class="fn-clear fc_ul">
             		<li class="fn-left  #if($!masterId == "loanManage")current_li #end">
-            			<a href="$!contextPath/addLoan.htm">贷款管理</a>
+            			<a href="$!contextPath/showLoanList.htm">贷款管理</a>
 						<table class="menu2_table">
             				<tr>
             					<td valign="top">

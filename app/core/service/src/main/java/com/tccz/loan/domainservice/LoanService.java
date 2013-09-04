@@ -4,10 +4,13 @@
  */
 package com.tccz.loan.domainservice;
 
+import java.io.OutputStream;
 import java.util.List;
 
+import com.tccz.loan.common.util.PageList;
 import com.tccz.loan.domain.entity.Loan;
 import com.tccz.loan.domain.result.CommonResult;
+import com.tccz.loan.domain.vo.LoanQueryCondition;
 import com.tccz.loan.domain.vo.MonthLoanDetail;
 
 /**
@@ -26,12 +29,22 @@ public interface LoanService {
 	List<MonthLoanDetail> calculate(Loan loan);
 
 	/**
+	 * 导出贷款计算结果
+	 * 
+	 * @param loan
+	 * @return
+	 */
+	CommonResult exportCalculateResult(Loan loan, OutputStream outputStream);
+
+	/**
 	 * 获取贷款对象
 	 * 
 	 * @param loanId
 	 * @return
 	 */
-	Loan getLoan(int loanId);
+	Loan getLoan(Integer loanId);
+
+	PageList<Loan> queryReportsByCondition(LoanQueryCondition queryCondition);
 
 	/**
 	 * 创建贷款对象并持久化
@@ -40,5 +53,13 @@ public interface LoanService {
 	 * @return
 	 */
 	CommonResult createLoan(Loan loan);
-	
+
+	/**
+	 * 删除指定贷款
+	 * 
+	 * @param loanId
+	 * @return
+	 */
+	CommonResult deleteLoan(int loanId);
+
 }

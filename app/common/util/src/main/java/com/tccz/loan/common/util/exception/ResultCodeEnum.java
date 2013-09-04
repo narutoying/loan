@@ -1,4 +1,4 @@
-package com.tccz.loan.domain.exception;
+package com.tccz.loan.common.util.exception;
 
 /**
  * 操作结果枚举类

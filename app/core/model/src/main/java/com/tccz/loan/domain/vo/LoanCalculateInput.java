@@ -29,6 +29,9 @@ public class LoanCalculateInput {
 	/** 月利率 */
 	private BigDecimal monthRate;
 
+	/** 放款日 */
+	private Date releaseDate;
+
 	/** 首个还款日 */
 	private Date firstRepaymentDate;
 
@@ -81,5 +84,13 @@ public class LoanCalculateInput {
 
 	public void setMonthRate(BigDecimal monthRate) {
 		this.monthRate = monthRate;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 }

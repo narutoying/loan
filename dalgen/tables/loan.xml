@@ -9,14 +9,19 @@
 	
 	<operation name="insert">
 		<sql><![CDATA[
-			insert into loan(loaner, executor, amount, currency, term, annual_rate, first_repayment_date, repayment_mode, repayment_config) values(?, ?, ?, ?, ?, ?, ?, ?, ?)
+			insert into loan(loaner, executor, amount, currency, term, annual_rate, first_repayment_date, repayment_mode, repayment_config, create_time, release_date) values(?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)
 		]]></sql>
 	</operation>
 	
-	<!--
+	<operation name="delete">
+		<sql><![CDATA[
+			delete from loan where id = ?
+		]]></sql>
+	</operation>
+	
 	<operation name="getByCondition" multiplicity="many" paging="true" parameterClass="map">
 		<extraparams>
-			<param name="loanname" javatype="java.lang.String"/>
+			<param name="loaner" javatype="java.lang.String"/>
 		 </extraparams>
 		<sql><![CDATA[
 			select * from loan
@@ -24,9 +29,9 @@
 		<sqlmap><![CDATA[
           select * from loan
 			<dynamic prepend="WHERE">
-				<isNotEmpty prepend="and" property="loanname">
+				<isNotEmpty prepend="and" property="loaner">
 					${cdata-start}
-						loanname = #loanname#
+						loaner = #loaner#
 					${cdata-end}
 				</isNotEmpty>
 			</dynamic>
